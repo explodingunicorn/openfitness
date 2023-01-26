@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { supabase } from "../../../utils/supabaseClient";
 
 import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
 
@@ -13,5 +14,5 @@ export const exampleRouter = createTRPCRouter({
 
   getSecretMessage: protectedProcedure.query(() => {
     return "you can now see this secret message!";
-  }),
+  })
 });

@@ -1,22 +1,34 @@
 import { type AppType } from "next/app";
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
-import { ChakraProvider } from '@chakra-ui/react'
+import {
+  ChakraProvider,
+  extendTheme,
+  theme as baseTheme,
+} from "@chakra-ui/react";
+import { theme as proTheme } from "@chakra-ui/pro-theme";
 
 import { api } from "../utils/api";
+import { Navbar } from "../components/Navbar";
 
-import "../styles/globals.css";
+export const theme = extendTheme(
+  {
+    colors: { ...baseTheme.colors, brand: baseTheme.colors.green },
+  },
+  proTheme
+);
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
   return (
-    <ChakraProvider>
-      <SessionProvider session={session}>
+    <SessionProvider session={session}>
+      <ChakraProvider theme={theme}>
+        <Navbar />
         <Component {...pageProps} />
-      </SessionProvider>
-    </ChakraProvider>
+      </ChakraProvider>
+    </SessionProvider>
   );
 };
 
